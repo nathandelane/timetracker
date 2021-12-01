@@ -3,12 +3,14 @@ package com.github.nathandelane.timetracker.rest;
 import com.github.nathandelane.timetracker.model.WorkTask;
 import com.github.nathandelane.timetracker.service.WorkTaskService;
 import com.github.nathandelane.timetracker.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 public class WorkTaskController {
 
   public static Route createWorkTask = (Request request, Response response) -> {

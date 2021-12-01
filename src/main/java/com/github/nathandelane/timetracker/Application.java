@@ -1,5 +1,6 @@
 package com.github.nathandelane.timetracker;
 
+import com.github.nathandelane.timetracker.config.ApplicationConfiguration;
 import com.github.nathandelane.timetracker.rest.DateTimeController;
 import com.github.nathandelane.timetracker.rest.HealthController;
 import com.github.nathandelane.timetracker.rest.WorkTaskController;
@@ -22,6 +23,8 @@ public class Application {
     delete("/workTask/:id/delete", "application/json", WorkTaskController.deleteWorkTask);
 
     get("/now", DateTimeController.getCurrentTime);
+
+    ApplicationConfiguration.get().getConfigValue("test");
   }
 
 }
