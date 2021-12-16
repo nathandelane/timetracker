@@ -22,7 +22,7 @@ public final class ApplicationConfiguration {
   private Map<String, Object> loadAppConfig() {
     final Yaml yaml = new Yaml();
 
-    try (final InputStream is = getClass().getResourceAsStream("application.yml")) {
+    try (final InputStream is = getClass().getClassLoader().getResourceAsStream("application.yml")) {
       final Map<String, Object> m = yaml.load(is);
 
       return Collections.unmodifiableMap(m);
