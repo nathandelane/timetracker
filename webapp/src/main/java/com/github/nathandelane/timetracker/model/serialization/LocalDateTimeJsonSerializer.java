@@ -1,4 +1,4 @@
-package com.github.nathandelane.timetracker.model;
+package com.github.nathandelane.timetracker.model.serialization;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

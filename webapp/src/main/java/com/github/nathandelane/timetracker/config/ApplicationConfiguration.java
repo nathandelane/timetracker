@@ -5,8 +5,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public final class ApplicationConfiguration {
@@ -34,7 +33,31 @@ public final class ApplicationConfiguration {
   }
 
   public Object getConfigValue(final String key) {
-    return configPairs.get(key);
+    final List<String> keyList = new ArrayList<>();
+
+    if (key.contains(".")) {
+      String[] keys = key.split("\\.");
+
+      keyList.addAll(Arrays.asList(keys));
+    }
+    else {
+      keyList.add(key);
+    }
+
+    Object value = null;
+
+    for (final String nextKey : keyList) {
+      if (value == null) {
+        value = configPairs.get(nextKey);
+      }
+      else {
+        final Object nextValue = ((LinkedHashMap) value).get(nextKey);
+
+        value = nextValue;
+      }
+    }
+
+    return value;
   }
 
   public static ApplicationConfiguration get() {

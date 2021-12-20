@@ -1,7 +1,7 @@
 package com.github.nathandelane.timetracker.util;
 
-import com.github.nathandelane.timetracker.model.LocalDateTimeJsonDeserializer;
-import com.github.nathandelane.timetracker.model.LocalDateTimeJsonSerializer;
+import com.github.nathandelane.timetracker.model.serialization.LocalDateTimeJsonDeserializer;
+import com.github.nathandelane.timetracker.model.serialization.LocalDateTimeJsonSerializer;
 import com.github.nathandelane.timetracker.model.WorkTask;
 import com.google.gson.*;
 
