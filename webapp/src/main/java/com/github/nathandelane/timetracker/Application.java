@@ -14,6 +14,11 @@ import static spark.Spark.*;
 @Slf4j
 public class Application {
 
+  static {
+    String path = Application.class.getClassLoader().getResource("logging.properties").getFile();
+    System.setProperty("java.util.logging.config.file", path);
+  }
+
   private static final String LISTENER_PORT = "timetracker.listener.port";
 
   private static int port;
