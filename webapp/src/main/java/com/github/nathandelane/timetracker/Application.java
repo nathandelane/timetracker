@@ -6,6 +6,11 @@ import com.github.nathandelane.timetracker.rest.HealthController;
 import com.github.nathandelane.timetracker.rest.WorkTaskController;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.LogManager;
+
 import static spark.Spark.*;
 
 /**

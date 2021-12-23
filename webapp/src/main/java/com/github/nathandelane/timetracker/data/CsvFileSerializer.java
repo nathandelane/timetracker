@@ -31,8 +31,10 @@ public abstract class CsvFileSerializer implements DataSerializer {
   }
 
   @Override
-  public void write(List<WorkTask> workTasks) {
+  public void write(final List<WorkTask> workTasks) {
+    for (final WorkTask nextWorkTask : workTasks) {
 
+    }
   }
 
   @Override
