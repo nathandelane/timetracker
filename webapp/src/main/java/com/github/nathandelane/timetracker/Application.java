@@ -1,60 +1,38 @@
 package com.github.nathandelane.timetracker;
 
-import com.github.nathandelane.timetracker.config.ApplicationConfiguration;
-import com.github.nathandelane.timetracker.rest.DateTimeController;
-import com.github.nathandelane.timetracker.rest.HealthController;
-import com.github.nathandelane.timetracker.rest.WorkTaskController;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.LogManager;
-
+import static com.github.nathandelane.timetracker.deps.Dependencies.*;
+import static com.github.nathandelane.timetracker.deps.Configuration.*;
+import static com.github.nathandelane.timetracker.filters.Filters.*;
 import static spark.Spark.*;
 
-/**
- * https://sparkjava.com/tutorials/application-structure
- */
-@Slf4j
 public class Application {
 
-  static {
-    String path = Application.class.getClassLoader().getResource("logging.properties").getFile();
-    System.setProperty("java.util.logging.config.file", path);
+  private Application() {
+    initializeApplication();
+    addFilters();
+    addResourceMappings();
   }
 
-  private static final String LISTENER_PORT = "timetracker.listener.port";
+  private void initializeApplication() {
+    initExceptionHandler(getExceptionHandler());
+    port(getPortNumber());
+    threadPool(getNumberOfThreads());
+  }
 
-  private static int port;
+  private void addFilters() {
+    before("*", BEFORE_ADD_REQUEST_START_TIME_MILLIS);
+    after("*", AFTER_LOG_REQUEST_AND_TIME_IN_MILLIS);
+    after("*", AFTER_ADD_GZIP_HEADER);
+  }
 
-  static {
-    final ApplicationConfiguration appConf = ApplicationConfiguration.get();
-    final Object portObj = appConf.getConfigValue(LISTENER_PORT);
-
-    if (portObj != null) {
-      final String strPort = portObj.toString();
-
-      port = Integer.parseInt(strPort);
-    }
+  private void addResourceMappings() {
+    get("/worktasks", getGetAllWorkTasksHandler());
+    get("/worktasks/:id", getGetWorkTaskByIdHanddler());
+    put("/worktasks/:start_date_and_time", "application/json", getCreateWorkTaskHandler());
   }
 
   public static void main(final String[] args) {
-    log.info("Starting application...");
-
-    port(port);
-
-    get("/health", HealthController.getApplicationHealth);
-
-    get("/workTasks", WorkTaskController.getAllWorkTasks);
-    put("/workTask", "application/json", WorkTaskController.createWorkTask);
-    post("/workTask/:id", "application/json", WorkTaskController.updateWorkTask);
-    delete("/workTask/:id/delete", "application/json", WorkTaskController.deleteWorkTask);
-
-    get("/now", DateTimeController.getCurrentTime);
-
-    //ApplicationConfiguration.get().getConfigValue("test");
-    ApplicationConfiguration.get().getConfigValue("");
+    new Application();
   }
 
 }

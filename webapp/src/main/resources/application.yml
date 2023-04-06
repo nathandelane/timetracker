@@ -1,4 +1,0 @@
-timetracker:
-  data-file-locations:
-  listener:
-    port: 16333
