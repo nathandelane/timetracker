@@ -12,7 +12,7 @@ import static spark.Spark.*;
 public class Application {
 
   public static void main(final String[] args) {
-    port(16333);
+    port(8080);
 
     get("/health", HealthController.getApplicationHealth);
 
