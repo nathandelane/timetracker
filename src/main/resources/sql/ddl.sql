@@ -4,6 +4,7 @@ create table work_tasks (
     , description varchar(1024) not null
     , requestor varchar(80) not null
     , planned varchar(1) not null
+    , project varchar(128)
     , category varchar(128) not null
     , check(planned in ('Y','N'))
 );

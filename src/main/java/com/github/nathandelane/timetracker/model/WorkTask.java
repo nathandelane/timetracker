@@ -19,16 +19,14 @@ public class WorkTask {
   public final String description;
 
   @NonNull
-  public final Integer whoCausedIt;
+  public final String requestor;
 
   @NonNull
   public final Boolean isPlanned;
 
-  public final String actionItem;
-
   @NonNull
-  public final Integer categoryOfWork;
+  public final String categoryOfWork;
 
-  public final Integer project;
+  public final String project;
 
 }
