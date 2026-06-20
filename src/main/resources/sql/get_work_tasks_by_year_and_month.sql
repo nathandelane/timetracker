@@ -5,5 +5,6 @@ select id
 , planned
 , project
 , category
+, end_datetime
 from work_tasks
 where start_datetime between ? and ?

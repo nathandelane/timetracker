@@ -25,7 +25,7 @@ public class WorkTaskDaoTest {
   }
 
   @Test
-  public void test() {
+  public void testSaveWorkTasksSingleTask() {
     final LocalDateTime localDateTime = LocalDateTime.now();
     final List<WorkTask> workTasks = new ArrayList<>();
     final WorkTask workTask = WorkTask.builder()

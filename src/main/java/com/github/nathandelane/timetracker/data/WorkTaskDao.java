@@ -178,7 +178,9 @@ public final class WorkTaskDao {
     final String project = rs.getString("project");
     final String category = rs.getString("category");
     final String strEndDateTime = rs.getString("end_datetime");
-    final LocalDateTime endDateTime = LocalDateTime.parse(strEndDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    final LocalDateTime endDateTime = (strEndDateTime != null) ?
+      LocalDateTime.parse(strEndDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME) :
+        null;
 
     final WorkTask workTask = WorkTask.builder()
       .id(id)
