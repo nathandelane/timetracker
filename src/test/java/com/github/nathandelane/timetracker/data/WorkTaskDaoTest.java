@@ -16,7 +16,7 @@ public class WorkTaskDaoTest {
 
   @BeforeAll
   public static void setupDbProvider() {
-    System.setProperty(DbProvider.DB_KEY, "jdbc:sqlite:timetracker_test.db");
+    System.setProperty(DbProvider.DB_NAME_KEY, "timetracker_test.db");
   }
 
   @BeforeEach
