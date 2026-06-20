@@ -24,25 +24,49 @@ public final class WorkTaskDao {
   public static int saveWorkTask(final WorkTask workTask) {
     int numRowsAffected = -1;
 
-    final String sql = SqlScripts.fromResources("sql/insert_new_work_task.sql");
+    if (workTask.id == null) {
+      final String sql = SqlScripts.fromResources("sql/insert_new_work_task.sql");
 
-    try (
-      final Connection conn = DriverManager.getConnection(DbProvider.getJdbc());
-      final PreparedStatement statement = conn.prepareStatement(sql)
-    ) {
-      if (workTask != null) {
+      try (
+        final Connection conn = DriverManager.getConnection(DbProvider.getJdbc());
+        final PreparedStatement statement = conn.prepareStatement(sql)
+      ) {
         final String strStartDateTime = workTask.startDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         statement.setString(1, strStartDateTime);
         statement.setString(2, workTask.description);
         statement.setString(3, workTask.requestor);
         statement.setString(4, workTask.isPlanned ? "Y" : "N");
         statement.setString(5, workTask.project);
-        statement.setString(6, workTask.categoryOfWork);
+        statement.setString(6, workTask.category);
 
         numRowsAffected = statement.executeUpdate();
+      } catch (final SQLException e) {
+        e.printStackTrace();
       }
-    } catch (final SQLException e) {
-      e.printStackTrace();
+    }
+    else {
+      final String sql = SqlScripts.fromResources("sql/update_existing_work_task.sql");
+
+      try (
+        final Connection conn = DriverManager.getConnection(DbProvider.getJdbc());
+        final PreparedStatement statement = conn.prepareStatement(sql)
+      ) {
+        final String strStartDateTime = workTask.startDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        final String strEndDateTime = workTask.endDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        statement.setString(1, strStartDateTime);
+        statement.setString(2, workTask.description);
+        statement.setString(3, workTask.requestor);
+        statement.setString(4, workTask.isPlanned ? "Y" : "N");
+        statement.setString(5, workTask.project);
+        statement.setString(6, workTask.category);
+        statement.setString(7, strEndDateTime);
+        statement.setLong(8, workTask.id);
+
+        numRowsAffected = statement.executeUpdate();
+      } catch (final SQLException e) {
+        e.printStackTrace();
+      }
     }
 
     return numRowsAffected;
@@ -153,6 +177,8 @@ public final class WorkTaskDao {
     final boolean planned = rs.getString("planned").equals("Y");
     final String project = rs.getString("project");
     final String category = rs.getString("category");
+    final String strEndDateTime = rs.getString("end_datetime");
+    final LocalDateTime endDateTime = LocalDateTime.parse(strEndDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
     final WorkTask workTask = WorkTask.builder()
       .id(id)
@@ -161,7 +187,8 @@ public final class WorkTaskDao {
       .requestor(requestor)
       .isPlanned(planned)
       .project(project)
-      .categoryOfWork(category)
+      .category(category)
+      .endDateTime(endDateTime)
       .build();
 
     return workTask;

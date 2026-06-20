@@ -11,7 +11,7 @@ public final class WorkTaskTestDao {
 
   private WorkTaskTestDao() { }
 
-  public static void deleteALlWorkTasks() {
+  public static void deleteAllWorkTasks() {
     final String sql = SqlScripts.fromResources("sql/delete_all_work_tasks.sql");
 
     try (

@@ -21,7 +21,7 @@ public class WorkTaskDaoTest {
 
   @BeforeEach
   public void clearDb() {
-    WorkTaskTestDao.deleteALlWorkTasks();
+    WorkTaskTestDao.deleteAllWorkTasks();
   }
 
   @Test
@@ -30,7 +30,7 @@ public class WorkTaskDaoTest {
     final List<WorkTask> workTasks = new ArrayList<>();
     final WorkTask workTask = WorkTask.builder()
       .isPlanned(true)
-      .categoryOfWork("Strategic Project")
+      .category("Strategic Project")
       .description("Start day")
       .requestor("I")
       .startDateTime(localDateTime)

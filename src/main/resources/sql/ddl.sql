@@ -6,5 +6,6 @@ create table work_tasks (
     , planned varchar(1) not null
     , project varchar(128)
     , category varchar(128) not null
+    , end_datetime datetime
     , check(planned in ('Y','N'))
 );

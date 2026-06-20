@@ -25,8 +25,10 @@ public class WorkTask {
   public final Boolean isPlanned;
 
   @NonNull
-  public final String categoryOfWork;
+  public final String category;
 
   public final String project;
+
+  public final LocalDateTime endDateTime;
 
 }

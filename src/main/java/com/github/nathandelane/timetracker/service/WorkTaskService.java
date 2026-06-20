@@ -5,7 +5,6 @@ import com.github.nathandelane.timetracker.model.WorkTask;
 import lombok.extern.java.Log;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Log
@@ -29,7 +28,7 @@ public class WorkTaskService {
     final String description = (updates.description == null || updates.description.trim().equals("")) ? original.description : updates.description;
     final String requestor = (!updates.requestor.equals(original.requestor)) ? updates.requestor : original.requestor;
     final Boolean isPlanned = (Boolean.compare(updates.isPlanned, original.isPlanned) != 0) ? updates.isPlanned : original.isPlanned;
-    final String categoryOfWork = (!updates.categoryOfWork.equals(original.categoryOfWork)) ? updates.categoryOfWork : original.categoryOfWork;
+    final String categoryOfWork = (!updates.category.equals(original.category)) ? updates.category : original.category;
     final String project = (!updates.project.equals(original.project)) ? updates.project : original.project;
 
     final WorkTask updatedWorkTask = WorkTask.builder()
@@ -38,7 +37,7 @@ public class WorkTaskService {
       .description(description)
       .requestor(requestor)
       .isPlanned(isPlanned)
-      .categoryOfWork(categoryOfWork)
+      .category(categoryOfWork)
       .project(project)
       .build();
 
@@ -60,6 +59,10 @@ public class WorkTaskService {
 
   public static List<WorkTask> getAllWorkTasks() {
     return WorkTaskDao.getAllWorkTasks();
+  }
+
+  public static List<WorkTask> getWorkTasks(final int year, final int month) {
+    return WorkTaskDao.getWorkTasks(year, month);
   }
 
 }

@@ -7,7 +7,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class WorkTaskController {
 
@@ -69,11 +69,25 @@ public class WorkTaskController {
     }
   };
 
-  public static Route getAllWorkTasks = (Request request, Response response) -> {
+  public static Route getWorkTasksForCurrentMonth = (Request request, Response response) -> {
     response.status(200);
     response.type("application/json");
 
-    return JsonUtil.toJson(WorkTaskService.getAllWorkTasks());
+    final LocalDate localDate = LocalDate.now();
+
+    return JsonUtil.toJson(WorkTaskService.getWorkTasks(localDate.getYear(), localDate.getMonthValue()));
+  };
+
+  public static Route getWorkTasks = (Request request, Response response) -> {
+    response.status(200);
+    response.type("application/json");
+
+    final String yearAsString = request.params(":year");
+    final int year = Integer.parseInt(yearAsString);
+    final String monthAsString = request.params(":month");
+    final int month = Integer.parseInt(monthAsString);
+
+    return JsonUtil.toJson(WorkTaskService.getWorkTasks(year, month));
   };
 
 }

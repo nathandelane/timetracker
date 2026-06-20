@@ -16,7 +16,8 @@ public class Application {
 
     get("/health", HealthController.getApplicationHealth);
 
-    get("/workTasks", WorkTaskController.getAllWorkTasks);
+    get("/workTasks", WorkTaskController.getWorkTasksForCurrentMonth);
+    get("/workTasks/:year/:month", WorkTaskController.getWorkTasks);
     put("/workTask", "application/json", WorkTaskController.createWorkTask);
     post("/workTask/:id", "application/json", WorkTaskController.updateWorkTask);
     delete("/workTask/:id/delete", "application/json", WorkTaskController.deleteWorkTask);
