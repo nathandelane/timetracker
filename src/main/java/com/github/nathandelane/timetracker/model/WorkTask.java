@@ -12,7 +12,6 @@ public class WorkTask {
 
   public final Long id;
 
-  @NonNull
   public final LocalDateTime startDateTime;
 
   @NonNull

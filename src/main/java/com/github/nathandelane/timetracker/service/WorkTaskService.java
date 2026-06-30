@@ -16,6 +16,7 @@ public class WorkTaskService {
       .startDateTime(startDayDateTime)
       .isPlanned(true)
       .description("Start day")
+      .category("Admin")
       .requestor("I")
       .build();
 
@@ -33,6 +34,7 @@ public class WorkTaskService {
       .endDateTime(endDayDateTime)
       .isPlanned(true)
       .description("End day")
+      .category("End day")
       .requestor("I")
       .build();
 
