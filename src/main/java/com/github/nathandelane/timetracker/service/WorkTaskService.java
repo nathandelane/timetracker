@@ -30,6 +30,7 @@ public class WorkTaskService {
     final LocalDateTime endDayDateTime = LocalDateTime.now();
     final WorkTask startDayWorkTask = WorkTask.builder()
       .startDateTime(endDayDateTime)
+      .endDateTime(endDayDateTime)
       .isPlanned(true)
       .description("End day")
       .requestor("I")
