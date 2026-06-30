@@ -168,6 +168,31 @@ public final class WorkTaskDao {
     return Collections.unmodifiableList(workTasks);
   }
 
+  public static boolean endWorkLastWorkTask() {
+    final long lastWorkTaskId = getLastWorkTaskId();
+
+    int numRowsAffected = 0;
+
+    if (lastWorkTaskId > 0) {
+      final String sql = SqlScripts.fromResources("sql/end_work_task.sql");
+
+      try (
+        final Connection conn = DriverManager.getConnection(DbProvider.getJdbc());
+        final PreparedStatement statement = conn.prepareStatement(sql)
+      ) {
+        statement.setLong(1, lastWorkTaskId);
+
+        numRowsAffected = statement.executeUpdate();
+      } catch (final SQLException e) {
+        throw new RuntimeException(e);
+      }
+
+      return numRowsAffected == 1;
+    }
+
+    return false;
+  }
+
   private static WorkTask getNextWorkTask(final ResultSet rs) throws SQLException {
     final long id = rs.getLong("id");
     final String strStartDateTime = rs.getString("start_datetime");
@@ -194,6 +219,31 @@ public final class WorkTaskDao {
       .build();
 
     return workTask;
+  }
+
+  private static long getLastWorkTaskId() {
+    long id = -1L;
+
+    final String sql = SqlScripts.fromResources("sql/get_last_work_task_id.sql");
+
+    try (
+      final Connection conn = DriverManager.getConnection(DbProvider.getJdbc());
+      final PreparedStatement statement = conn.prepareStatement(sql)
+    ) {
+      final ResultSet rs = statement.executeQuery();
+
+      while (rs.next()) {
+        final Long maxId = rs.getLong("max_id");
+
+        if (maxId != null && maxId > 0) {
+          id = maxId;
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return id;
   }
 
   private static LocalDateTime fromDate(final Date date) {

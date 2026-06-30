@@ -11,6 +11,24 @@ import java.time.LocalDate;
 
 public class WorkTaskController {
 
+  public static Route startWorkDay = (Request request, Response response) -> {
+    WorkTaskService.startDay();
+
+    response.status(200);
+    response.type("application/json");
+
+    return "{\"status\":\"OK\"}";
+  };
+
+  public static Route endWorkDay = (Request request, Response response) -> {
+    WorkTaskService.endDay();
+
+    response.status(200);
+    response.type("application/json");
+
+    return "{\"status\":\"OK\"}";
+  };
+
   public static Route createWorkTask = (Request request, Response response) -> {
     final WorkTask responseWorkTask;
 

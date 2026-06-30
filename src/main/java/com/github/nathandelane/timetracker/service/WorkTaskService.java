@@ -10,7 +10,45 @@ import java.util.List;
 @Log
 public class WorkTaskService {
 
+  public static WorkTask startDay() {
+    final LocalDateTime startDayDateTime = LocalDateTime.now();
+    final WorkTask startDayWorkTask = WorkTask.builder()
+      .startDateTime(startDayDateTime)
+      .isPlanned(true)
+      .description("Start day")
+      .requestor("I")
+      .build();
+
+    saveWorkTask(startDayWorkTask);
+
+    log.info("Started work day: " + startDayDateTime);
+
+    return startDayWorkTask;
+  }
+
+  public static WorkTask endDay() {
+    final LocalDateTime endDayDateTime = LocalDateTime.now();
+    final WorkTask startDayWorkTask = WorkTask.builder()
+      .startDateTime(endDayDateTime)
+      .isPlanned(true)
+      .description("End day")
+      .requestor("I")
+      .build();
+
+    saveWorkTask(startDayWorkTask);
+
+    log.info("Ended work day: " + endDayDateTime);
+
+    return startDayWorkTask;
+  }
+
   public static WorkTask saveWorkTask(final WorkTask workTask) {
+    final boolean lastWorkTaskEnded = WorkTaskDao.endWorkLastWorkTask();
+
+    if (!lastWorkTaskEnded) {
+      log.info("No work task ended.");
+    }
+
     WorkTaskDao.saveWorkTask(workTask);
 
     log.info("Created workTask: " + workTask);

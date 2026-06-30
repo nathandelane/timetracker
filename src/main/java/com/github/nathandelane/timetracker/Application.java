@@ -12,7 +12,7 @@ import static spark.Spark.*;
 public class Application {
 
   public static void main(final String[] args) {
-    port(8080);
+    port(8081);
 
     get("/health", HealthController.getApplicationHealth);
 
@@ -21,6 +21,8 @@ public class Application {
     put("/workTask", "application/json", WorkTaskController.createWorkTask);
     post("/workTask/:id", "application/json", WorkTaskController.updateWorkTask);
     delete("/workTask/:id/delete", "application/json", WorkTaskController.deleteWorkTask);
+    post("/startDay", WorkTaskController.startWorkDay);
+    post("/endDay", WorkTaskController.endWorkDay);
 
     get("/now", DateTimeController.getCurrentTime);
   }
