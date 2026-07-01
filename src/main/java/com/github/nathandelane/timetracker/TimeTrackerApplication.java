@@ -6,10 +6,7 @@ import com.github.nathandelane.timetracker.rest.WorkTaskController;
 
 import static spark.Spark.*;
 
-/**
- * https://sparkjava.com/tutorials/application-structure
- */
-public class Application {
+public class TimeTrackerApplication {
 
   public static void main(final String[] args) {
     port(8081);

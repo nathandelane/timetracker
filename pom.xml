@@ -71,7 +71,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>com.github.nathandelane.timetracker.Application</mainClass>
+                <mainClass>com.github.nathandelane.timetracker.TimeTrackerApplication</mainClass>
               </manifest>
             </archive>
             <descriptorRefs>
