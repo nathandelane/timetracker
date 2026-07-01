@@ -2,6 +2,7 @@ package com.github.nathandelane.timetracker.data;
 
 import com.github.nathandelane.timetracker.model.WorkTask;
 import com.github.nathandelane.timetracker.util.SqlScripts;
+import lombok.extern.java.Log;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Log
 public final class WorkTaskDao {
 
   private WorkTaskDao() { }
@@ -153,10 +155,14 @@ public final class WorkTaskDao {
     final List<WorkTask> workTasks = new ArrayList<>();
     final String startDate = new StringBuilder(Integer.toString(year)).append('-')
       .append(String.format("%1$2s", month).replaceAll(" ", "0"))
-      .append("-").append("01").toString();
+      .append("-").append("01")
+      .append("T00:00:00").toString();
     final String endDate = new StringBuilder(Integer.toString(year)).append('-')
       .append(String.format("%1$2s", month).replaceAll(" ", "0"))
-      .append("-").append(getMaxNumberOfDaysForMonth(year, month)).toString();
+      .append("-").append(getMaxNumberOfDaysForMonth(year, month))
+      .append("T23:59:59").toString();
+
+    log.info(String.format("Query work tasks for range: startDate=%s, endDate=%s", startDate, endDate));
 
     final String sql = SqlScripts.fromResources("sql/get_work_tasks_by_year_and_month.sql");
 

@@ -29,7 +29,7 @@ public class WorkTaskService {
 
   public static WorkTask endDay() {
     final LocalDateTime endDayDateTime = LocalDateTime.now();
-    final WorkTask startDayWorkTask = WorkTask.builder()
+    final WorkTask endDayWorkTask = WorkTask.builder()
       .startDateTime(endDayDateTime)
       .endDateTime(endDayDateTime)
       .isPlanned(true)
@@ -38,11 +38,11 @@ public class WorkTaskService {
       .requestor("I")
       .build();
 
-    saveWorkTask(startDayWorkTask);
+    saveWorkTask(endDayWorkTask);
 
     log.info("Ended work day: " + endDayDateTime);
 
-    return startDayWorkTask;
+    return endDayWorkTask;
   }
 
   public static WorkTask saveWorkTask(final WorkTask workTask) {
@@ -103,6 +103,8 @@ public class WorkTaskService {
   }
 
   public static List<WorkTask> getWorkTasks(final int year, final int month) {
+    log.info(String.format("Get work tasks for year: %d and month: %d", year, month));
+
     return WorkTaskDao.getWorkTasks(year, month);
   }
 
